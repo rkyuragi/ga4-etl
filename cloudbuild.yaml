@@ -1,0 +1,54 @@
+steps:
+  # Docker イメージをビルド
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['build', '-t', 'gcr.io/$PROJECT_ID/ga4-etl:$COMMIT_SHA', '.']
+
+  # ビルドしたイメージを Container Registry にプッシュ
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', 'gcr.io/$PROJECT_ID/ga4-etl:$COMMIT_SHA']
+
+  # Cloud Run Job を作成または更新
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'jobs'
+      - 'update'
+      - 'ga4-etl-job'
+      - '--image=gcr.io/$PROJECT_ID/ga4-etl:$COMMIT_SHA'
+      - '--region=asia-northeast1'
+      - '--memory=2Gi'
+      - '--cpu=1'
+      - '--max-retries=3'
+      - '--task-timeout=3600s'
+      - '--set-env-vars=GCP_PROJECT_ID=$PROJECT_ID'
+      - '--set-secrets=SLACK_WEBHOOK_URL=ga4-etl-slack-webhook:latest'
+    id: 'update-job'
+
+  # 最新のイメージでジョブを実行（オプション）
+  # - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+  #   entrypoint: 'gcloud'
+  #   args:
+  #     - 'run'
+  #     - 'jobs'
+  #     - 'execute'
+  #     - 'ga4-etl-job'
+  #     - '--region=asia-northeast1'
+  #     - '--wait'
+  #   id: 'execute-job'
+
+# ビルドしたイメージをアーティファクトとして保存
+images:
+  - 'gcr.io/$PROJECT_ID/ga4-etl:$COMMIT_SHA'
+
+# タイムアウト設定
+timeout: '1800s'
+
+# 代替オプション: Cloud Run Jobs のスケジュール設定
+# Cloud Scheduler を使用して定期的に実行する場合は、以下のコマンドを使用します
+# gcloud scheduler jobs create http ga4-etl-daily-job \
+#   --schedule="0 3 * * *" \
+#   --uri="https://asia-northeast1-run.googleapis.com/apis/run.googleapis.com/v1/namespaces/$PROJECT_ID/jobs/ga4-etl-job:run" \
+#   --http-method=POST \
+#   --oauth-service-account-email=$PROJECT_NUMBER-compute@developer.gserviceaccount.com \
+#   --location=asia-northeast1

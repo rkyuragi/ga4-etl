@@ -1,0 +1,26 @@
+# BigQuery関連
+google-cloud-bigquery==3.11.4
+google-cloud-storage==2.13.0
+pandas==2.0.3
+pandas-gbq==0.19.2
+pyarrow==14.0.1
+
+# Cloud Run Job関連
+google-cloud-run==0.10.5
+
+# Slack通知関連
+slack-sdk==3.24.0
+
+# ユーティリティ
+python-dotenv==1.0.0
+pyyaml==6.0.1
+
+# 開発用ツール
+pytest==7.3.1
+black==23.3.0
+isort==5.12.0
+flake8==6.0.0
+mypy==1.5.1
+pre-commit==3.4.0
+types-PyYAML==6.0.12.11
+flake8-docstrings==1.7.0
