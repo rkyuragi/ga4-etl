@@ -88,11 +88,7 @@ def process_single_date(target_date: str) -> Dict[str, Any]:
 
 
 def run_daily_process() -> int:
-    """日次処理を実行する。
-
-    Returns:
-        int: 終了コード（0: 成功、1: 失敗）
-    """
+    """日次処理を実行する。"""
     logger = logging.getLogger(__name__)
     logger.info("GA4 ETL日次処理を開始します")
 
@@ -125,11 +121,7 @@ def run_daily_process() -> int:
 
 
 def run_full_process() -> int:
-    """全量処理を実行する。
-
-    Returns:
-        int: 終了コード（0: 成功、1: 失敗）
-    """
+    """全量処理を実行する。"""
     logger = logging.getLogger(__name__)
     logger.info("GA4 ETL全量処理を開始します")
 
@@ -207,11 +199,7 @@ def run_full_process() -> int:
 
 
 def main() -> int:
-    """メイン関数。
-
-    Returns:
-        int: 終了コード（0: 成功、1: 失敗）
-    """
+    """メイン関数。"""
     # コマンドライン引数の解析
     parser = argparse.ArgumentParser(description="GA4 ETL処理")
     parser.add_argument(
