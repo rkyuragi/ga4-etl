@@ -45,7 +45,6 @@ class Config:
 
         # Slack通知設定
         self.slack_webhook_url = os.getenv("SLACK_WEBHOOK_URL")
-        self.slack_channel = os.getenv("SLACK_CHANNEL", "#ga4-etl-notifications")
         self.slack_username = os.getenv("SLACK_USERNAME", "GA4 ETL Bot")
 
         # 処理モード
@@ -55,6 +54,17 @@ class Config:
 
         # ログ設定
         self.log_level = os.getenv("LOG_LEVEL", "INFO")
+
+        # 変換設定
+        self.transform_method = os.getenv(
+            "TRANSFORM_METHOD", "python"
+        )  # 'python' または 'sql'
+        self.sql_transform_name = os.getenv(
+            "SQL_TRANSFORM_NAME", "daily_web"
+        )  # 使用するSQL変換の名前
+        self.sql_transform_file = os.getenv(
+            "SQL_TRANSFORM_FILE"
+        )  # カスタムSQL変換ファイルのパス
 
     def load_table_schema(self, schema_file: str) -> List[Dict[str, Any]]:
         """テーブルスキーマをYAMLファイルから読み込む。"""

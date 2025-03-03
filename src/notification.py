@@ -20,7 +20,6 @@ class SlackNotifier:
     def __init__(self) -> None:
         """Slack通知クラスの初期化。"""
         self.webhook_url = config.slack_webhook_url
-        self.channel = config.slack_channel
         self.username = config.slack_username
 
         if not self.webhook_url:
@@ -94,7 +93,6 @@ class SlackNotifier:
             response = webhook.send(
                 text=f"GA4 ETL処理通知: {message}",
                 blocks=blocks,
-                channel=self.channel,
                 username=self.username,
             )
 
