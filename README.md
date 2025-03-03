@@ -45,7 +45,6 @@ Google Analytics 4（GA4）のデータをBigQueryから抽出し、解析しや
 | START_DATE | 全量処理の開始日（YYYY-MM-DD形式） | (全量処理時必須) |
 | END_DATE | 全量処理の終了日（YYYY-MM-DD形式） | (全量処理時必須) |
 | SLACK_WEBHOOK_URL | Slack通知用のWebhook URL | (オプション) |
-| SLACK_USERNAME | 通知時に表示するユーザー名 | GA4 ETL Bot |
 | LOG_LEVEL | ログレベル | INFO |
 
 ## 開発環境のセットアップ

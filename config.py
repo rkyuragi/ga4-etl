@@ -45,7 +45,6 @@ class Config:
 
         # Slack通知設定
         self.slack_webhook_url = os.getenv("SLACK_WEBHOOK_URL")
-        self.slack_username = os.getenv("SLACK_USERNAME", "GA4 ETL Bot")
 
         # 処理モード
         self.processing_mode = os.getenv(
